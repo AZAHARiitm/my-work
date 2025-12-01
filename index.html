@@ -1,12 +1,145 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>My Work Showcase</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quarterly Earnings — RevealJS</title>
+
+  <!-- Reveal core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css" id="theme">
+
+  <!-- Highlight.js CSS for code highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/default.min.css">
+
+  <style>
+    /* small custom styling */
+    .reveal { font-family: Inter, Roboto, Arial, sans-serif; }
+    .email { font-size: 0.9rem; color:#333; margin-top:0.5rem; }
+    .chart { height: 360px; margin: 12px auto; }
+    pre code { font-size: 0.95rem; }
+  </style>
 </head>
 <body>
-  <h1>My Work Showcase</h1>
-  <p>Contact: <!--email_off-->24f2008055@ds.study.iitm.ac.in<!--/email_off--></p>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Title slide -->
+      <section>
+        <h1>Quarterly Earnings Report</h1>
+        <p class="email">Prepared by: <strong>24f2008055@ds.study.iitm.ac.in</strong></p>
+        <aside class="notes">Open with a 30-second summary of the quarter and key ask from stakeholders.</aside>
+      </section>
+
+      <!-- Markdown slide (data-markdown) -->
+      <section data-markdown>
+        <textarea data-template>
+## Executive Summary
+
+- **Revenue:** ₹X.XX Bn (YoY +Y%)
+- **Net Income:** ₹X.XX Bn
+- **Key Drivers:**
+  - Product A growth
+  - Cost optimisation
+
+--- 
+
+## Next Steps
+
+1. Continue margin initiatives
+2. Invest in high-growth channels
+
+> Presenter: highlight sustainable growth and risks.
+        </textarea>
+      </section>
+
+      <!-- Fragments / Animated elements -->
+      <section>
+        <h2>Highlights</h2>
+        <ul>
+          <li class="fragment">Revenue growth from digital channels</li>
+          <li class="fragment">Sequential margin improvement</li>
+          <li class="fragment fade-up">Free cash flow positive</li>
+        </ul>
+        <aside class="notes">Reveal each point and give 1-line evidence for each.</aside>
+      </section>
+
+      <!-- Code sample with syntax highlighting -->
+      <section>
+        <h2>Reproducible Analysis (Python)</h2>
+        <pre><code class="language-python"># Load QTR financials and compute YoY revenue
+import pandas as pd
+
+df = pd.read_csv('financials_qtr.csv')
+df['YoY_revenue'] = df['revenue'].pct_change(periods=4)
+print(df[['quarter','revenue','YoY_revenue']].tail())</code></pre>
+        <aside class="notes">Walk the audience through this snippet: data load, YoY calc, reproducibility.</aside>
+      </section>
+
+      <!-- Math formulas -->
+      <section>
+        <h2>Key Financial Formulae</h2>
+        <p>Return on Invested Capital (ROIC):</p>
+        <p>\[\mathrm{ROIC} = \frac{\mathrm{NOPAT}}{\mathrm{Invested\ Capital}}\times 100\%\]</p>
+        <p>Gordon Growth (terminal value):</p>
+        <p>\[\mathrm{TV} = \frac{\mathrm{FCF}_{n+1}}{r-g}\]</p>
+        <aside class="notes">Explain NOPAT assumptions, discount rate (r) and growth (g).</aside>
+      </section>
+
+      <!-- Small interactive placeholder (d3 placeholder) -->
+      <section id="chart-slide">
+        <h2>Revenue Trend (placeholder)</h2>
+        <div id="d3-chart" class="chart">(chart will render when this slide is shown)</div>
+        <aside class="notes">Mention last 8 quarters and drivers for the trend.</aside>
+      </section>
+
+      <!-- Closing slide with publish information -->
+      <section>
+        <h2>Published</h2>
+        <p>This presentation is published to GitHub Pages.</p>
+        <p>URL: <code>https://azahariitm.github.io/my-work/</code></p>
+        <p>If content looks stale, append <code>?v=1</code> (or ?v=2) to the URL.</p>
+        <aside class="notes">Share the link with stakeholders and note the cache refresh trick.</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Use ES modules version of Reveal + plugins -->
+  <script type="module">
+    import Reveal from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.esm.js';
+    import Markdown from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.esm.js';
+    import Highlight from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.esm.js';
+    import Notes from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.esm.js';
+    import MathPlugin from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/math/math.esm.js';
+
+    Reveal.initialize({
+      width: 1280,
+      height: 720,
+      margin: 0.05,
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'slide',
+      plugins: [ Markdown, Highlight, Notes, MathPlugin ],
+      math: {
+        mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+      }
+    });
+
+    // small placeholder for chart rendering (no external data required)
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js';
+    function updateChart(){
+      const container = d3.select('#d3-chart');
+      container.selectAll('*').remove();
+      const svg = container.append('svg').attr('viewBox','0 0 800 300').attr('preserveAspectRatio','xMidYMid meet');
+      svg.append('text').attr('x',400).attr('y',150).attr('text-anchor','middle').text('Revenue chart placeholder').style('font-size','18px');
+    }
+    Reveal.on('slidechanged', event => {
+      if(event.currentSlide && event.currentSlide.id === 'chart-slide') updateChart();
+    });
+  </script>
 </body>
 </html>
